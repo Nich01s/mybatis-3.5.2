@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"/><!--读取外部属性配置文件-->
+
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/> <!--开启驼峰映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn-->
+
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.mashibing.bean.Emp" alias="emp"/> <!--指定type的属性值所值的全类名 与 alias属性值所值的别名-->
+        <package name="com.mashibing.bean"/> <!--将name所指的路径包名下，所有类都起别名，别名为类的简单类名，映射该类类的全类名-->
+    </typeAliases>
+
+    <environments default="default"><!--选择数据源环境-->
+        <environment id="default"><!--id为default的数据源环境-->
+            <transactionManager type="JDBC"/><!--使用JDBC事务管理器-->
+            <dataSource type="POOLED"><!--使用Spring带连接池-->
+                <property name="driver" value="${dataSource.driverClassName}"/>
+                <property name="url" value="${dataSource.url}"/>
+                <property name="username" value="${dataSource.username}"/>
+                <property name="password" value="${dataSource.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <databaseIdProvider type="DB_VENDOR">
+        <property name="MySQL" value="mysql"/>
+        <property name="SQL Server" value="sqlserver"/>
+        <property name="Oracle" value="oracle"/>
+    </databaseIdProvider>
+
+    <mappers>
+        <mapper class="com.mashibing.dao.EmoDao"/>
+    </mappers>
+</configuration>
